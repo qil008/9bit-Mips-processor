@@ -1,0 +1,223 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/qianq/Desktop/cse141L/class_demo_proc/simulation/modelsim
+valu
+Z1 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z2 !s110 1687018262
+!i10b 1
+!s100 LWnED25U_mU>o:FSQR=L90
+Z3 !s11b Dg1SIo80bB@j0V0VzS_@n1
+ImL60]S4f[A=<T573?OBeB3
+Z4 VDg1SIo80bB@j0V0VzS_@n1
+S1
+R0
+w1686460810
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/alu.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/alu.sv
+!i122 5
+L0 2 52
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1687018262.000000
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/alu.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/alu.sv|
+!i113 1
+Z7 o-sv -work work
+Z8 !s92 -sv -work work +incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc
+Z9 tCvgOpt 0
+vControl
+R1
+R2
+!i10b 1
+!s100 >FG_Y?hOT?3V7::Y[>Qm>3
+R3
+I^=d9gb?OdVF4ekRz?DA[41
+R4
+S1
+R0
+w1686468748
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/Control.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/Control.sv
+!i122 4
+Z10 L0 2 118
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/Control.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/Control.sv|
+!i113 1
+R7
+R8
+R9
+n@control
+vdat_mem
+R1
+R2
+!i10b 1
+!s100 g5K;i`LFoSFDlkCIj_f8H0
+R3
+I@c0DRP6]D=`Z27jb2?QAW2
+R4
+S1
+R0
+w1686478645
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/dat_mem.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/dat_mem.sv
+!i122 3
+L0 2 19
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/dat_mem.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/dat_mem.sv|
+!i113 1
+R7
+R8
+R9
+vinstr_ROM
+R1
+R2
+!i10b 1
+!s100 j?chAg^dhmz>OVkE]TPYM1
+R3
+ILWbK2ZIgmBdVWVbbOE2kH2
+R4
+S1
+R0
+w1687018204
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/instr_ROM.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/instr_ROM.sv
+!i122 6
+L0 4 15
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/instr_ROM.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/instr_ROM.sv|
+!i113 1
+R7
+R8
+R9
+ninstr_@r@o@m
+vPC
+R1
+R2
+!i10b 1
+!s100 DYd=2naYLgVanYbb^Kg;63
+R3
+Ie`I]i2X57061>zTjSI1PZ0
+R4
+S1
+R0
+w1686367282
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/PC.sv
+!i122 2
+L0 4 17
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC.sv|
+!i113 1
+R7
+R8
+R9
+n@p@c
+vPC_LUT
+R1
+R2
+!i10b 1
+!s100 6meNoWVeS0oh`[_aXO:ke1
+R3
+I7Xjb6cgBM0j`^5997nSXz1
+R4
+S1
+R0
+w1686568524
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC_LUT.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/PC_LUT.sv
+!i122 1
+L0 1 30
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC_LUT.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/PC_LUT.sv|
+!i113 1
+R7
+R8
+R9
+n@p@c_@l@u@t
+vreg_file
+R1
+R2
+!i10b 1
+!s100 ];D>;M]g2]b6bOd:^4;?H0
+R3
+I`i2F<aVz9O]e3IBZJl?V@2
+R4
+S1
+R0
+w1686468036
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/reg_file.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/reg_file.sv
+!i122 0
+L0 3 42
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/reg_file.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/reg_file.sv|
+!i113 1
+R7
+R8
+R9
+vtop_level
+R1
+!s110 1687018263
+!i10b 1
+!s100 T=]>fHG5<^1i8nfL^ek;N0
+R3
+IGE8cn:z@<A:O06nn8hg5C2
+R4
+S1
+R0
+w1686718121
+8C:/Users/qianq/Desktop/cse141L/class_demo_proc/top_level.sv
+FC:/Users/qianq/Desktop/cse141L/class_demo_proc/top_level.sv
+!i122 7
+R10
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/qianq/Desktop/cse141L/class_demo_proc/top_level.sv|
+!s90 -reportprogress|300|-sv|-work|work|+incdir+C:/Users/qianq/Desktop/cse141L/class_demo_proc|C:/Users/qianq/Desktop/cse141L/class_demo_proc/top_level.sv|
+!i113 1
+R7
+R8
+R9

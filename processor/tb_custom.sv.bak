@@ -1,0 +1,50 @@
+`timescale 1ns / 1ps
+
+module top_level_tb;
+
+  // Parameters
+  parameter D = 10;
+  parameter A = 4;
+
+  // Signals
+  reg clk;
+  reg reset;
+  reg req;
+  wire done;
+
+  // Instantiate the device under test (DUT)
+  top_level #(.D(D), .A(A)) dut (
+    .clk(clk),
+    .reset(reset),
+    .req(req),
+    .done(done)
+  );
+
+  // Clock generator
+  always begin
+    #5 clk = ~clk;  // Toggle clock every 5 time units
+  end
+
+  // Test sequence
+  initial begin
+    // Initialize signals
+    clk = 0;
+    reset = 1;
+    req = 0;
+
+    // Apply reset
+    #10 reset = 0;
+    #10 reset = 1;
+    #10 reset = 0;
+
+    // Apply some stimulus
+
+    // Wait for done
+    @(posedge done);
+    $display("Test passed");
+
+    // End simulation
+    $finish;
+  end
+
+endmodule

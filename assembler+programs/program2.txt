@@ -1,0 +1,503 @@
+// Counter initialized to 0, stored in R5
+LWI 0
+MOV R7 R5
+
+//branch destination 15
+// start of the loop
+// Load input MSW and store in R1
+MOV R5 R6
+LW 31
+MOV R7 R1
+
+// Load input LSW and store in R2
+LW 30
+MOV R7 R2
+
+// extract every single bit and store in memory address starting from 128
+// set R6 to be 128 for storing every single bit 
+MOV R0 R6
+
+// Extract b15, this is done by shift R1 right by 7  
+SHIFTI -4 R1
+SHIFTI -3 R7
+
+SW 15
+
+// Extract b14, this is done by shift R1 left by 1 and then right by 7
+SHIFTI +1 R1     
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 14
+
+// Extract b13, this is done by shift R1 left by 2 and then right by 7
+SHIFTI +2 R1     
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 13
+
+// Extract b12,this is done by shift R1 left by 3 and then right by 7  
+SHIFTI +3 R1     
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+
+SW 12
+
+// Extract b11, this is done by shift R1 left by 4 and then right by 7 
+SHIFTI +4 R1   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 11
+
+// Extract b10, this is done by shift R1 left by 5 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +1 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 10
+
+// Extract b9, this is done by shift R1 left by 6 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +2 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 9
+
+// Extract b8, this is done by shift R1 left by 7 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +3 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 8
+
+// Extract b7, this is done by shift R2 right by 7  
+SHIFTI -4 R2
+SHIFTI -3 R7
+
+SW 7
+
+// Extract b6, this is done by shift R2 left by 1 and then right by 7
+SHIFTI +1 R2    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 6
+
+// Extract b5, this is done by shift R2 left by 2 and then right by 7
+SHIFTI +2 R2     
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 5
+
+// Extract b4,this is done by shift R2 left by 3 and then right by 7  
+SHIFTI +3 R2     
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+
+SW 4
+
+// Extract b3, this is done by shift R2 left by 4 and then right by 7 
+SHIFTI +4 R2   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 3
+
+// Extract b2, this is done by shift R2 left by 5 and then right by 7
+SHIFTI +4 R2  
+SHIFTI +1 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 2
+
+// Extract b1, this is done by shift R2 left by 6 and then right by 7
+SHIFTI +4 R2  
+SHIFTI +2 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 1
+
+// Extract b0, this is done by shift R2 left by 7 and then right by 7
+SHIFTI +4 R2  
+SHIFTI +3 R7   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+SW 0
+
+// Calculate c4 = ^(b15:b8)
+
+MOV R1 R7
+XORB R7
+
+SW 16
+
+// Calculate c3 = ^(b15:b12,b7:b4)
+
+SHIFTI -4 R1
+MOV R7 R4
+// R4 = 0 0 0 0 b15 b14 b13 b12
+
+SHIFTI -4 R2
+SHIFTI +4 R7
+ADD R7 R4
+// R7 = b7 b6 b5 b4 b15 b14 b13 b12
+
+XORB R7
+
+SW 17
+
+// Calculate c2 = ^(b15,b14,b11,b10,b7,b6,b3,b2)
+
+// Extract b15 and reposition
+LW 15
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b15 0 0 0 0 0 0 0
+
+// Extract b14 and reposition
+LW 14
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 0 0 0 0 0 0
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 0 0 0 0 0
+
+// Extract b10 and reposition
+LW 10
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 b10 0 0 0 0
+
+// Extract b7
+LW 7
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 b10 b7 0 0 0
+
+// Extract b6
+LW 6
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 b10 b7 b6 0 0
+
+// Extract b3
+LW 3
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 b10 b7 b6 b3 0
+
+// Extract b2
+LW 2
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b14 b11 b10 b7 b6 b3 b2
+
+// All bits collected, calculate c2
+XORB R7
+
+SW 18
+
+// Calculate c1 = ^(b15,b13,b11,b9,b7,b5,b3,b1)
+
+// Extract b15 and reposition
+LW 15
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b15 0 0 0 0 0 0 0
+
+// Extract b13 and reposition
+LW 13
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 0 0 0 0 0 0
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 0 0 0 0 0
+
+// Extract b9 and reposition
+LW 9
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 b9 0 0 0 0
+
+// Extract b7
+LW 7
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 b9 b7 0 0 0
+
+// Extract b5
+LW 5
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 b9 b7 b5 0 0
+
+// Extract b3
+LW 3
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 b9 b7 b5 b3 0
+
+// Extract b1
+LW 1
+ADD R7 R4
+MOV R7 R4
+// R4 = b15 b13 b11 b9 b7 b5 b3 0
+
+// All bits collected, calculate c1
+XORB R7
+
+SW 19
+
+// construct C = 0 0 0 0 c4 c3 c2 c1 for error correction
+LW 19
+MOV R7 R3
+// R3 = 0 0 0 0 0 0 0 c1
+
+LW 18
+SHIFTI +1 R7
+ADD R7 R3
+MOV R7 R3
+// R3 = 0 0 0 0 0 0 c2 c1
+
+LW 17
+SHIFTI +2 R7
+ADD R7 R3
+MOV R7 R3
+// R3 = 0 0 0 0 0 c3 c2 c1
+
+LW 16
+SHIFTI +3 R7
+ADD R7 R3
+MOV R7 R3
+// R3 = 0 0 0 0 c4 c3 c2 c1
+
+SW 20
+
+MOV R1 R7
+XORB R4
+MOV R2 R7
+XORB R7
+SHIFTI +1 R7
+ADD R4 R7
+XORB R7
+
+SW 21
+
+MOV R7 R6
+
+LWI 0
+// reset R4 for later use
+MOV R7 R4
+
+// NO error or double error when P = 0
+BRE 16
+
+//---------------------------------------sessiong for single error---------------------------------------
+// use value in R3 for position of error bit
+// reset R6 to extract the wrong bit using r3 = c1c2c3c4
+MOV R0 R6
+ADD R3 R6
+MOV R7 R6
+LW 0
+
+// extract wrong bit and xor with 1 to flip it, save the result in R4
+MOV R7 R6
+LWI 1
+XOR R4
+
+// reset r6 to save it back
+MOV R0 R6
+ADD R3 R6
+MOV R7 R6
+MOV R4 R7
+SW 0
+
+// construct F1 F0 = 0 1, then go to 4 to reconstruct message 
+LWI 1
+SHIFTI +4 R7
+SHIFTI +2 R7
+MOV R7 R4
+// R4 = 0 1 0 0 0 0 0 0
+
+// goto 2, the subroutine for reconstructing the message
+LWI 0
+MOV R7 R6
+BRE 17
+//------------------------------------sessiong for single error end----------------------------------------
+
+//branch destination 16
+//----------------------------------session for no error or double error-----------------------------------
+LWI 0
+MOV R3 R6
+
+// NO error
+BRE 17
+
+//------------------------session for double error------------------------
+// Output  10000000 10000000
+LWI 1
+SHIFTI +4 R7
+SHIFTI +3 R7
+
+// save LSW
+MOV R5 R6
+SW 1
+SW 0
+
+// goto 3
+LWI 0
+MOV R7 R6
+BRE 18
+//-----------------------session for double error end-----------------------
+
+//branch destination 17
+//-------------------------session for no error----------------------------- 
+//-----------this is also used for single error reconstruction--------------
+//for no error, FIFO = 00, we don't need to do anything 
+
+//LSW
+
+//reset R6 to load single digits
+MOV R0 R6
+
+// Extract b15 and reposition
+LW 15
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 0 b15 0 0
+
+// Extract b14 and reposition
+LW 14
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 0 b15 b14 0
+
+// Extract b13 and reposition
+LW 13
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 0 b15 b14 b13
+
+// save LSW
+MOV R5 R6
+SW 1
+
+//MSW
+
+// Extract b12 and reposition
+// reset r6 to 128 to extract single bits
+MOV R0 R6
+LW 12
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b12 0 0 0 0 0 0 0
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 0 0 0 0 0 0
+
+// Extract b10 and reposition
+LW 10
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 0 0 0 0 0
+
+// Extract b9 and reposition
+LW 9
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 b9 0 0 0 0
+
+// Extract b7 and reposition
+LW 7
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 b9 b7 0 0 0
+
+// Extract b6 and reposition
+LW 6
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 b9 b7 b6 0 0
+
+
+// Extract b5 and reposition
+LW 5
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 b9 b7 b6 b5 0
+
+// Extract b3 and reposition
+LW 3
+ADD R7 R4
+MOV R7 R4
+// R4 = b12 b11 b10 b9 b7 b6 b5 b3
+
+// save MSW
+MOV R5 R6
+SW 0
+//--------------------------no error session end----------------------------
+//--------------------------------no error or double error session end-------------------------------------
+
+//branch destination 18
+// update R5
+ADDI +2 R5
+MOV R7 R5
+
+// check branch
+MOV R7 R6
+LWI 30
+BRNE 15
+
+
+EXIT 0

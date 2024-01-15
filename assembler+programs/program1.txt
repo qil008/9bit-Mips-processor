@@ -1,0 +1,494 @@
+// Counter initialized to 0, stored in R5
+LWI 0
+MOV R7 R5
+
+//branch destination 15
+// start of the loop
+// Load input MSW and store in R1
+MOV R5 R6
+LW 1
+MOV R7 R1
+
+// Load input LSW and store in R2
+LW 0
+MOV R7 R2
+MOV R0 R6
+
+// Extract b11, this is done by shift R1 left by 5 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +1 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 139
+SW 11
+
+// Extract b10, this is done by shift R1 left by 6 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +2 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 138
+SW 10
+
+// Extract b9, this is done by shift R1 left by 7 and then right by 7
+SHIFTI +4 R1  
+SHIFTI +3 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 137
+SW 9
+
+// Extract b8, this is done by shift R2 right by 7  
+SHIFTI -4 R2
+SHIFTI -3 R7
+
+// save to 136
+SW 8
+
+// Extract b7, this is done by shift R2 left by 1 and then right by 7
+SHIFTI +1 R2    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 135
+SW 7
+
+// Extract b6, this is done by shift R2 left by 2 and then right by 7
+SHIFTI +2 R2   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 134
+SW 6
+
+// Extract b5, this is done by shift R2 left by 3 and then right by 7
+SHIFTI +3 R2    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 133
+SW 5
+
+// Extract b4, this is done by shift R2 left by 4 and then right by 7
+SHIFTI +4 R2   
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 132
+SW 4
+
+// Extract b3, this is done by shift R2 left by 5 and then right by 7
+SHIFTI +4 R2
+SHIFTI +1 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 131
+SW 3
+
+// Extract b2, this is done by shift R2 left by 6 and then right by 7
+SHIFTI +4 R2
+SHIFTI +2 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 130
+SW 2
+
+// Extract b1, this is done by shift R2 left by 7 and then right by 7
+SHIFTI +4 R2
+SHIFTI +3 R7    
+SHIFTI -4 R7
+SHIFTI -3 R7
+
+// save to 129
+SW 1
+
+// Now if you make sure R6 = R0 = 128, LW k will give you bk (kth data bit) in R7
+
+// MSW
+// Calculate p8 = ^(b11:b5)
+
+// extract associated bits and store them from left to right in R4
+
+// extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b11 0 0 0 0 0 0 0
+
+// extract b10 and reposition
+LW 10
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 0 0 0 0 0 0
+
+// extract b9 and reposition
+LW 9
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 0 0 0 0 0
+
+// extract b8 and reposition
+LW 8
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 0 0 0 0
+
+// extract b7 and reposition
+LW 7
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b7 0 0 0
+
+// extract b6 and reposition
+LW 6
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b7 b6 0 0
+
+// extract b5 and reposition
+LW 5
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b7 b6 b5 0
+
+// Calculate p8 using XORB instruction
+MOV R4 R7
+XORB R7
+// R7 = 0 0 0 0 0 0 0 p8
+
+// Save p8 to memory
+SW 12
+
+// All parity bits collected, construct output MSW
+ADD R4 R7
+
+// set R5 to address start point to store into required location
+MOV R5 R6
+
+// Save output MSW to memory
+SW 31
+
+// LSW
+// Set R6 to address start point to load single data bit
+MOV R0 R6
+
+// Calculate p4 = ^(b11:b8,b4,b3,b2)
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b11 0 0 0 0 0 0 0
+
+// Extract b10 and reposition
+LW 10
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 0 0 0 0 0 0
+
+// Extract b9 and reposition
+LW 9
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 0 0 0 0 0
+
+// Extract b8 and reposition
+LW 8
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 0 0 0 0
+
+// Extract b4
+LW 4
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b4 0 0 0
+
+// Extract b3
+LW 3
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b4 b3 0 0
+
+// Extract b2
+LW 2
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b9 b8 b4 b3 b2 0
+
+// Calculate p4 using XORB instruction
+MOV R4 R7
+XORB R7
+// R7 = 0 0 0 0 0 0 0 p4
+
+// Save p4 to memory
+SW 13
+
+// Calculate p2 = ^(b11,b10,b7,b6,b4,b3,b1)
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b11 0 0 0 0 0 0 0
+
+// Extract b10 and reposition
+LW 10
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 0 0 0 0 0 0
+
+// Extract b7
+LW 7
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b7 0 0 0 0 0
+
+// Extract b6
+LW 6
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b7 b6 0 0 0 0
+
+// Extract b4
+LW 4
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b7 b6 b4 0 0 0
+
+// Extract b3
+LW 3
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b7 b6 b4 b3 0 0
+
+// Extract b1
+LW 1
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b10 b7 b6 b4 b3 b1 0
+
+// Calculate p2 using XORB instruction
+MOV R4 R7
+XORB R7
+// R7 = 0 0 0 0 0 0 0 p2
+
+// Save p2 to memory
+SW 14
+
+// Calculate p1 = ^(b11,b9,b7,b5,b4,b2,b1)
+
+// Extract b11 and reposition
+LW 11
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b11 0 0 0 0 0 0 0
+
+// Extract b9
+LW 9
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 0 0 0 0 0 0
+
+// Extract b7
+LW 7
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 b7 0 0 0 0 0
+
+// Extract b5
+LW 5
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 b7 b5 0 0 0 0
+
+// Extract b4
+LW 4
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 b7 b5 b4 0 0 0
+
+// Extract b2
+LW 2
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 b7 b5 b4 b2 0 0
+
+// Extract b1
+LW 1
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b11 b9 b7 b5 b4 b2 b1 0
+
+// Calculate p1 using XORB instruction
+MOV R4 R7
+XORB R7
+// R7 = 0 0 0 0 0 0 0 p1
+
+// Save p1 to memory
+SW 15
+
+// Calculate p0 = ^(b11:1,p8,p4,p2,p1)
+
+// Retrieve p8, reposition and use r4 to collect it
+LW 12
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = 0 0 0 0 p8 0 0 0
+
+// Retrieve p4, reposition and use r4 to collect it
+LW 13
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 p8 p4 0 0
+
+// Retrieve p2, reposition and use r4 to collect it
+LW 14
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 p8 p4 p2 0
+
+// Retrieve p1, reposition and use r4 to collect it
+LW 15
+ADD R7 R4
+MOV R7 R4
+// R4 = 0 0 0 0 p8 p4 p2 p1
+
+// We can also collect input MSW in R3
+SHIFTI +4 R1
+ADD R7 R4
+// R7 = 0 b11 b10 b9 p8 p4 p2 p1
+
+// Calculate intermeidate result pi = ^(b11,b10,b9,p8,p4,p2,p1) save in R4
+XORB R4
+
+// Calculate intermediate result pj = ^(b8:b1)
+MOV R2 R7
+XORB R7
+
+// Adjust position to calculate p0 = ^(pi, pj)
+SHIFTI +1 R7
+ADD R7 R4
+XORB R7
+// R7 = 0 0 0 0 0 0 0 p0
+
+// save p0
+SW 16
+
+// All bits needed for LSW has been calculated, Retrieve and reposition to form output LSW
+
+// Retrieve b4 and reposition
+LW 4
+SHIFTI +4 R7
+SHIFTI +3 R7
+MOV R7 R4
+// R4 = b4 0 0 0 0 0 0 0
+
+// Retrieve b3 and reposition
+LW 3
+SHIFTI +4 R7
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 0 0 0 0 0 0
+
+// Retrieve b2 and reposition
+LW 2
+SHIFTI +4 R7
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 0 0 0 0 0
+
+// Retrieve p4 and reposition
+LW 13
+SHIFTI +4 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 p4 0 0 0 0
+
+// Retrieve b1 and reposition
+LW 1
+SHIFTI +3 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 p4 b1 0 0 0
+
+// Retrieve p2 and reposition
+LW 14
+SHIFTI +2 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 p4 b1 p2 0 0
+
+// Retrieve p1 and reposition
+LW 15
+SHIFTI +1 R7
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 p4 b1 p2 p1 0
+
+// Retrieve p0 and reposition
+LW 16
+ADD R7 R4
+MOV R7 R4
+// R4 = b4 b3 b2 p4 b1 p2 p1 p0
+
+// use R5 as start address and save LSW
+MOV R5 R6
+MOV R4 R7
+SW 30
+
+// update R5
+ADDI +2 R5
+MOV R7 R5
+
+// check branch
+MOV R7 R6
+LWI 30
+BRNE 15
+
+EXIT 0

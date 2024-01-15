@@ -1,0 +1,332 @@
+// Counter initialized to 0, stored in R5
+LWI 0
+MOV R7 R5
+
+// Load 5-bit pattern, adjust position store in R1
+LWI 31
+MOV R7 R6
+LW 1
+MOV R7 R1
+
+//branch destination 0
+// Load first word from counter, store in R2
+// First word denote as W1, second denote as W2, for commenting purpose
+MOV R5 R6
+LW 0
+MOV R7 R2
+
+// use R4 as sliding window of 5 bits to check equality
+// use xor of R1 and R4 to check equality for every window
+
+// initialize R3 = 0 to count occurence of equality
+LWI 0
+MOV R7 R3
+
+// check W1[7:3]
+SHIFTI -3 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 1 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 1
+// check W1[6:2]
+SHIFTI -2 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 2 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 2
+// check W1[5:1]
+SHIFTI -1 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 3 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 3
+// check W1[4:0]
+SHIFTI +3 R2
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 4 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 4
+// reform R3 so that first 4 bits of R3 record the occurence with in a word
+// and second 4 bits of R3 record occurence including some bits from the next word
+SHIFTI +4 R3
+MOV R7 R3
+
+// reform R2 so that it stores W1[3:0]++W2[7:4],
+SHIFTI +4 R2
+MOV R7 R2
+MOV R5 R6
+LW 1
+SHIFTI -4 R7
+ADD R7 R2
+MOV R7 R2
+
+
+// check W1[3:0]+W2[7]
+SHIFTI -3 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 5 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 5
+// check W1[2:0]+W2[7:6]
+SHIFTI -2 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 6 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 6
+// check W1[1:0]+W2[7:5]
+SHIFTI -1 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 7 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 7
+// check W1[0]+W2[7:4]
+SHIFTI +3 R2
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 8 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 8
+// save R3 to memory(after 128) for the next loop that do counting
+ADD R0 R5
+MOV R7 R6
+MOV R3 R7
+SW 0
+
+// update R5
+ADDI +1 R5
+MOV R7 R5
+
+// check branch
+MOV R7 R6
+LWI 31
+BRNE 0
+// here 0 will be passed into branch LUT and LUT will return value 5  and sent it to PC, you can also refer discription in line 5. 
+
+// for the 31st word, we don't need to consider the bits that extend to the next word so we use a separate routine
+
+// Load first word from counter, store in R2
+// here we only use W1
+MOV R5 R6
+LW 0
+MOV R7 R2
+
+// use R4 as sliding window of 5 bits to check equality
+// use xor of R1 and R4 to check equality for every window
+
+// initialize R3 = 0 to count occurence of equality
+LWI 0
+MOV R7 R3
+
+// check W1[7:3]
+SHIFTI -3 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 9 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 9
+// check W1[6:2]
+SHIFTI -2 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 10 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 10
+// check W1[5:1]
+SHIFTI -1 R2
+SHIFTI +3 R7
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 11 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 11
+// check W1[4:0]
+SHIFTI +3 R2
+MOV R7 R4
+
+// check equality
+MOV R1 R6
+MOV R4 R7
+BRNE 12 
+
+// if equal, add 1 to R3
+ADDI +1 R3
+MOV R7 R3
+
+//branch destination 12
+// adjust position
+SHIFTI +4 R3
+MOV R7 R3
+
+// save the last 8 bit count pattern
+ADD R0 R5
+MOV R7 R6
+MOV R3 R7
+SW 0
+
+
+
+
+
+
+// We have stored occurences in memory 128 to 159, now use another loop to count result
+
+// Counter initialized to 0, stored in R5
+LWI 0
+MOV R7 R5
+
+// R2 store the occurence with in the word
+// R3 store the occurence inlcuding some bits from next word
+// R4 store if there is a occurence in the word(0 or 1 for every word)
+// both initialize to 0
+LWI 0
+MOV R7 R2
+MOV R7 R3
+MOV R7 R4
+
+//branch destination 13
+// Load first word from counter, store in R1
+ADD R5 R0
+MOV R7 R6
+LW 0
+MOV R7 R1
+
+// extract occurence according to the 4 bits + 4bits structure we stored it
+
+// first 4 bits, indicating occurence within the word
+// we also save this result into R6 for calculating occurence including some bits in the next word
+SHIFTI -4 R1
+MOV R7 R6
+ADD R7 R2
+MOV R7 R2
+
+
+// second 4 bits + frist 4 bits = occurence including some bits from the next word
+SHIFTI +4 R1
+SHIFTI -4 R7
+ADD R7 R6
+ADD R7 R3
+MOV R7 R3
+
+// update R4 as well
+LWI 0
+BRE 14
+ADDI +1 R4
+MOV R7 R4
+
+//branch destination 14
+// update R5
+ADDI +1 R5
+MOV R7 R5
+
+// check branch
+MOV R7 R6
+LWI 31
+ADDI +1 R7
+BRNE 13
+
+// at the end store each value in the memory location required
+LWI 31
+MOV R7 R6
+
+MOV R2 R7
+SW 2
+
+MOV R3 R7
+SW 4
+
+MOV R4 R7
+SW 3
+
+EXIT 0
